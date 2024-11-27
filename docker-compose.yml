@@ -10,9 +10,9 @@ services:
       - mongodb
       - redis
     environment:
-      MONGO_URI: mongodb://mongodb:27017/miapp
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      MONGO_URI: ${MONGO_URI}  # Usa la variable de entorno de Azure
+      REDIS_HOST: ${REDIS_HOST}  # Usa la variable de entorno de Azure
+      REDIS_PORT: ${REDIS_PORT}  # Usa la variable de entorno de Azure
     volumes:
       - .:/app
 

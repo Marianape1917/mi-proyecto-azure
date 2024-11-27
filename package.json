@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "cache.js",
   "scripts": {
-    "start": "node cache.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "axios": "^0.21.4",

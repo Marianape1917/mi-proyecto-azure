@@ -3,7 +3,7 @@ const axios = require('axios');
 const http = require('http');
 
 // Conectar a MongoDB
-mongoose.connect('mongodb://mongodb:27017/miapp', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -104,7 +104,7 @@ const obtenerYGuardarDatosHistoricos = async () => {
         const Weather = crearModeloMunicipio(nombre);
 
         // Solicitar datos para el rango completo de 5 años
-        const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${startDate}&end_date=${endDate}&hourly=temperature_2m,relative_humidity_2m,rain,surface_pressure&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+        const url = `${process.env.API}?latitude=${lat}&longitude=${lon}&start_date=${startDate}&end_date=${endDate}&hourly=temperature_2m,relative_humidity_2m,rain,surface_pressure&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
 
         try {
             const response = await axios.get(url);
@@ -174,9 +174,8 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-// Ejecutar el servidor en el puerto 3000
-server.listen(3000, () => {
-    console.log('Servidor ejecutándose en http://localhost:3000');
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`Servidor ejecutándose en http://localhost:${process.env.PORT || 3000}`);
     
     // Llamar a la función para obtener y guardar datos meteorológicos históricos
     obtenerYGuardarDatosHistoricos();
